@@ -1,12 +1,14 @@
 # terraform-show-etl
 
-![Deployment Diagram](./docs/diagrams/structurizr-1-deploy.png)
-
-![Keys - Deployment Diagram](./docs/diagrams/structurizr-1-deploy-key.png)
-
 ## Processo de ETL para o Terraform
 
 Esta documentação descreve o processo de extração, transformação e organização dos dados gerados pelo Terraform, com o objetivo de criar um JSON estruturado para gerar diagramas de deployment de infraestrutura com Structurizr.
+
+**Diagrama de Deploy:**
+![Deployment Diagram](./docs/diagrams/structurizr-1-deploy.png)
+
+**Keys:**
+![Keys - Deployment Diagram](./docs/diagrams/structurizr-1-deploy-key.png)
 
 ## Visão Geral
 
