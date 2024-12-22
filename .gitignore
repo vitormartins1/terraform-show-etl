@@ -158,6 +158,7 @@ crash.log
 .env
 
 
+./docs/.structurizr/
 .structurizr/
 localstack_data/
 
