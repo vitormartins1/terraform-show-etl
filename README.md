@@ -4,6 +4,12 @@
 
 Esta documentação descreve o processo de extração, transformação e organização dos dados gerados pelo Terraform, com o objetivo de criar um JSON estruturado para gerar diagramas de deployment de infraestrutura com Structurizr.
 
+**Diagrama de Deploy:**
+![Deployment Diagram](./docs/diagrams/structurizr-1-deploy.png)
+
+**Keys:**
+![Keys - Deployment Diagram](./docs/diagrams/structurizr-1-deploy-key.png)
+
 ## Visão Geral
 
 Este script processa os dados gerados pelo comando `terraform show -json`, extraindo informações sobre:
