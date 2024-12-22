@@ -55,21 +55,18 @@ workspace {
                             snsSubscription -> sqsQueuePolicy "Depends On"
                         }
 
-                        # Grupo Data
-                        deploymentNode "Data" {
-                            tags "Terraform Data Resources"
+                        tags "Terraform Data Resources"
 
-                            deploymentNode "Amazon SSM" {
-                                tags "Amazon Web Services - Systems Manager"
-                                parameter = infrastructureNode "SSM Parameter Store" {
-                                    description "Parâmetro usado para configuração."
-                                    technology "AWS SSM Parameter"
-                                    tags "Amazon Web Services - Systems Manager Parameter Store"
-                                }
+                        deploymentNode "Amazon SSM" {
+                            tags "Amazon Web Services - Systems Manager"
+                            parameter = infrastructureNode "SSM Parameter Store" {
+                                description "Parâmetro usado para configuração."
+                                technology "AWS SSM Parameter"
+                                tags "Amazon Web Services - Systems Manager Parameter Store"
                             }
-
-                            snsTopic -> parameter "Reference SSM Parameter"
                         }
+
+                        snsTopic -> parameter "Reference SSM Parameter"
                     }
                 }
             }
@@ -91,13 +88,9 @@ workspace {
             }
             
             element "Terraform Managed Resources" {
-                color #391fd9
-                stroke #391fd9
-            }
-            
-            element "Terraform Data Resources" {
-                color #6d6c6b
-                stroke #6d6c6b
+                color #000000
+                stroke #000000
+                icon "https://git-scm.com/images/logos/downloads/Git-Icon-Black.png"
             }
         }
 
