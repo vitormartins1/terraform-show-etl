@@ -5,12 +5,12 @@ services:
     image: localstack/localstack
     container_name: localstack
     ports:
-      - "4566:4566" # Porta principal para todos os serviços
-      - "4510-4559:4510-4559" # Portas adicionais para Lambda
+      - "4566:4566" 
+      - "4510-4559:4510-4559"
     environment:
       - DOCKER_HOST=unix:///var/run/docker.sock
-      - SERVICES=ec2,s3,iam,lambda # Adicione os serviços que deseja simular
+      - SERVICES=ec2,s3,iam,lambda,ssm 
       - AWS_DEFAULT_REGION=us-east-1
     volumes:
-      - "./localstack_data:/var/lib/localstack" # Persistência de dados
-      - "/var/run/docker.sock:/var/run/docker.sock" # Necessário para Lambda
+      - "./localstack_data:/var/lib/localstack" 
+      - "/var/run/docker.sock:/var/run/docker.sock" 

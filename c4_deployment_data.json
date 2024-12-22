@@ -4,57 +4,83 @@
     "region": "us-east-1"
   },
   "resources": {
-    "aws_sns_topic": [
-      {
-        "address": "aws_sns_topic.example_topic",
-        "mode": "managed",
-        "name": "example_topic",
-        "expressions": {
-          "name": {
-            "constant_value": "example-topic"
+    "managed": {
+      "aws_sns_topic": [
+        {
+          "address": "aws_sns_topic.example_topic",
+          "mode": "managed",
+          "name": "example_topic",
+          "expressions": {
+            "name": {
+              "constant_value": "example-topic"
+            }
           }
         }
-      }
-    ],
-    "aws_sns_topic_subscription": [
-      {
-        "address": "aws_sns_topic_subscription.example_subscription",
-        "mode": "managed",
-        "name": "example_subscription",
-        "expressions": {
-          "protocol": {
-            "constant_value": "sqs"
-          }
-        },
-        "depends_on": [
-          "aws_sqs_queue_policy.example_policy"
-        ]
-      }
-    ],
-    "aws_sqs_queue": [
-      {
-        "address": "aws_sqs_queue.example_queue",
-        "mode": "managed",
-        "name": "example_queue",
-        "expressions": {
-          "name": {
-            "constant_value": "example-queue"
+      ],
+      "aws_sns_topic_subscription": [
+        {
+          "address": "aws_sns_topic_subscription.example_subscription",
+          "mode": "managed",
+          "name": "example_subscription",
+          "expressions": {
+            "protocol": {
+              "constant_value": "sqs"
+            }
           },
-          "visibility_timeout_seconds": {
-            "constant_value": 30
+          "depends_on": [
+            "aws_sqs_queue_policy.example_policy"
+          ]
+        }
+      ],
+      "aws_sqs_queue": [
+        {
+          "address": "aws_sqs_queue.example_queue",
+          "mode": "managed",
+          "name": "example_queue",
+          "expressions": {
+            "name": {
+              "constant_value": "example-queue"
+            },
+            "visibility_timeout_seconds": {
+              "constant_value": 30
+            }
           }
         }
-      }
-    ],
-    "aws_sqs_queue_policy": [
-      {
-        "address": "aws_sqs_queue_policy.example_policy",
-        "mode": "managed",
-        "name": "example_policy"
-      }
-    ]
+      ],
+      "aws_sqs_queue_policy": [
+        {
+          "address": "aws_sqs_queue_policy.example_policy",
+          "mode": "managed",
+          "name": "example_policy"
+        }
+      ]
+    },
+    "data": {
+      "aws_ssm_parameter": [
+        {
+          "address": "data.aws_ssm_parameter.example_param",
+          "mode": "data",
+          "name": "example_param",
+          "expressions": {
+            "name": {
+              "constant_value": "/example/parameter"
+            }
+          }
+        }
+      ]
+    }
   },
   "relationships": [
+    {
+      "from": "aws_sns_topic.example_topic",
+      "to": "data.aws_ssm_parameter.example_param",
+      "type": "reference"
+    },
+    {
+      "from": "aws_sns_topic_subscription.example_subscription",
+      "to": "aws_sqs_queue_policy.example_policy",
+      "type": "depends_on"
+    },
     {
       "from": "aws_sns_topic_subscription.example_subscription",
       "to": "aws_sqs_queue.example_queue",
@@ -64,11 +90,6 @@
       "from": "aws_sns_topic_subscription.example_subscription",
       "to": "aws_sns_topic.example_topic",
       "type": "reference"
-    },
-    {
-      "from": "aws_sns_topic_subscription.example_subscription",
-      "to": "aws_sqs_queue_policy.example_policy",
-      "type": "depends_on"
     },
     {
       "from": "aws_sqs_queue_policy.example_policy",
