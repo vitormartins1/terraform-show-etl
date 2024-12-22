@@ -1,6 +1,6 @@
 provider "aws" {
   region                      = "us-east-1"
-  access_key                  = "test" # Credenciais fictícias para LocalStack
+  access_key                  = "test" 
   secret_key                  = "test"
   skip_credentials_validation = true
   skip_metadata_api_check     = true
@@ -10,11 +10,19 @@ provider "aws" {
     ec2 = "http://localhost:4566"
     sns = "http://localhost:4566"
     sqs = "http://localhost:4566"
+    ssm = "http://localhost:4566" 
   }
+}
+
+data "aws_ssm_parameter" "example_param" {
+  name = "/example/parameter"
 }
 
 resource "aws_sns_topic" "example_topic" {
   name = "example-topic"
+  tags = {
+    example_param = data.aws_ssm_parameter.example_param.value
+  }
 }
 
 resource "aws_sqs_queue" "example_queue" {

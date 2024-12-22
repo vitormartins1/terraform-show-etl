@@ -2,11 +2,17 @@
 
 ## Processo de ETL para o Terraform
 
-Esta documentação descreve o processo de extração, transformação e organização dos dados gerados pelo Terraform, com o objetivo de criar um JSON estruturado para gerar diagramas de deployment de infraestrutura (C4 Deployment).
+Esta documentação descreve o processo de extração, transformação e organização dos dados gerados pelo Terraform, com o objetivo de criar um JSON estruturado para gerar diagramas de deployment de infraestrutura com Structurizr.
 
 ## Visão Geral
 
-Este script processa os dados gerados pelo comando `terraform show -json`, extraindo informações sobre recursos, metadados e relacionamentos definidos no Terraform. O resultado é um JSON consolidado que organiza recursos por tipo e extrai relacionamentos explícitos e referências implícitas.
+Este script processa os dados gerados pelo comando `terraform show -json`, extraindo informações sobre:
+
+- **Metadados**: Dados globais, como provedor e região.
+- **Recursos**: Separados em managed (gerenciados pelo repositório) e data (fontes de dados externas apenas consultadas).
+- **Relacionamentos**: Dependências explícitas (`depends_on`) e referências implícitas entre os recursos.
+
+O resultado é um JSON consolidado que organiza recursos por modo (`managed` ou `data`) e por tipo, além de listar os relacionamentos entre eles.
 
 ## Comandos para Gerar o JSON
 
@@ -38,10 +44,10 @@ O script é dividido em etapas principais:
 
 **1. Remoção de Valores Vazios**
 
-A função `remove_empty_values` elimina valores nulos, listas vazias e objetos vazios do JSON para simplificar os dados:
+A função `clean_dict` remove valores nulos, listas vazias e objetos vazios do JSON para simplificar os dados:
 
 ```python
-def remove_empty_values(obj):
+def clean_dict(obj):
     # Remove valores nulos, listas e objetos vazios
 ```
 
@@ -54,57 +60,64 @@ def extract_metadata(terraform_json):
     # Extrai o provedor e a região do JSON
 ```
 
-**3. Organização de Recursos por Tipo**
+**3. Organização de Recursos por Modo e Tipo**
 
-A função `organize_resources_by_type` agrupa os recursos extraídos por tipo (e.g., `aws_instance`, `aws_security_group`):
+A função `organize_resources_by_mode` categoriza os recursos em managed e data, e os agrupa por tipo dentro de cada categoria:
 
 ```python
-def organize_resources_by_type(resources):
-    # Agrupa os recursos por tipo
+def organize_resources_by_mode(resources):
+    # Organiza os recursos por modo (managed/data) e tipo
 ```
 
 **4. Extração de Relacionamentos**
 
-A função `extract_relationships` analisa explicitamente os campos `depends_on` e referências em expressions para identificar dependências explícitas:
+A função `extract_relationships` analisa explicitamente os campos `depends_on` e referências em `expressions` para identificar dependências **explícitas** e **implícitas**:
 
 ```python
 def extract_relationships(resources):
-    # Extrai relacionamentos explícitos entre os recursos
+    # Extrai relacionamentos explícitos e implícitos entre os recursos
 ```
 
-**Tipos de Relacionamentos:**
+Regras de Relacionamentos:
 
-- `depends_on`: Dependências explícitas declaradas no código Terraform.
-- `reference`: Referências diretas a outros recursos encontradas em expressions.
+- `depends_on`: Relacionamentos explícitos declarados no código Terraform.
+- `reference`: Referências implícitas identificadas em expressions.
 
-**5. Limpeza de Dados**
+**5. Normalização de Referências**
 
-As funções `remove_references_from_resources` e `clean_empty_properties` eliminam campos desnecessários e propriedades vazias para deixar o JSON final mais legível e útil:
+A função `normalize_reference` ajusta os identificadores de recursos para remover ambiguidades, considerando:
+
+- Recursos `managed`: Normalizados para `tipo.nome`.
+- Recursos `data`: Normalizados para `data.tipo.nome`.
 
 ```python
-def remove_references_from_resources(resources):
-    # Remove referências após extraí-las
+def normalize_reference(reference):
+    # Normaliza as referências com base no modo do recurso
 ```
 
+**6. Limpeza de Dados**
+
+As funções `remove_references_from_resources` e `clean_dict` eliminam campos desnecessários e propriedades vazias, deixando o JSON final mais legível e útil:
+
 ```python
-def clean_empty_properties(resources):
-    # Remove propriedades vazias do JSON final
+def clean_resources(resources, remove_references=True):
+    # Limpa propriedades desnecessárias e referências
 ```
 
 ## Fluxo do Script
 
-O fluxo principal do script está encapsulado na função `extract_configuration_resources`:
+O fluxo principal do script está encapsulado na função `process_terraform`:
 
 ```python
-def extract_configuration_resources(terraform_json):
-    # Extrai e organiza os recursos, relacionamentos e limpa os dados
+def process_terraform(terraform_json):
+    # Pipeline principal para extrair, organizar e limpar dados
 ```
 
-**Etapas:**
+**Etapas do Fluxo:**
 
 1. Carregar os dados do Terraform (`terraform_state.json)`.
-2. Organizar os recursos por tipo.
-3. Extrair relacionamentos explícitos.
+2. Organizar os recursos por por managed e data, e organiza por tipo.
+3. Extrair relacionamentos explícitos e implícitos.
 4. Limpar valores desnecessários e referências extraídas.
 
 ## Saída Final
@@ -115,10 +128,10 @@ O script gera um arquivo chamado `c4_deployment_data.json` contendo:
 	- Provedor (`provider`) e região (`region`).
 
 2.	Recursos:
-	- Estruturados por tipo (e.g., `aws_instance`, `aws_security_group`).
+	- Organizados por managed e data, com agrupamento por tipo.
 
 3.	Relacionamentos:
-	- Relacionamentos explícitos entre os recursos.
+	- Dependências explícitas e referências implícitas entre os recursos.
 
 **Formato Exemplo:**
 
@@ -129,36 +142,27 @@ O script gera um arquivo chamado `c4_deployment_data.json` contendo:
     "region": "us-east-1"
   },
   "resources": {
-    "aws_instance": [
-      {
-        "address": "aws_instance.example_instance",
-        "type": "aws_instance",
-        "expressions": {
-          "ami": {
-            "constant_value": "ami-12345678"
-          },
-          "instance_type": {
-            "constant_value": "t2.micro"
-          }
+    "managed": {
+      "aws_sns_topic": [
+        {
+          "address": "aws_sns_topic.example_topic",
+          "name": "example_topic"
         }
-      }
-    ],
-    "aws_security_group": [
-      {
-        "address": "aws_security_group.example_sg",
-        "type": "aws_security_group",
-        "expressions": {
-          "name": {
-            "constant_value": "example-security-group"
-          }
+      ]
+    },
+    "data": {
+      "aws_ssm_parameter": [
+        {
+          "address": "data.aws_ssm_parameter.example_param",
+          "name": "example_param"
         }
-      }
-    ]
+      ]
+    }
   },
   "relationships": [
     {
-      "from": "aws_instance.example_instance",
-      "to": "aws_security_group.example_sg",
+      "from": "aws_sns_topic.example_topic",
+      "to": "data.aws_ssm_parameter.example_param",
       "type": "reference"
     }
   ]
@@ -167,4 +171,4 @@ O script gera um arquivo chamado `c4_deployment_data.json` contendo:
 
 ## Conclusão
 
-O script transforma os dados brutos do Terraform em um JSON estruturado para facilitar a criação de diagramas de deployment ou outras análises de infraestrutura.
+Este script transforma os dados brutos do Terraform em um JSON estruturado para facilitar a criação de diagramas de deployment ou outras análises de infraestrutura. A categorização por managed e data proporciona maior clareza sobre os recursos gerenciados e consultados, permitindo representações precisas no diagrama final.
