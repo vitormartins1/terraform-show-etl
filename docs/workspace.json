@@ -4,7 +4,7 @@
   "documentation" : { },
   "id" : 1,
   "lastModifiedAgent" : "structurizr-ui",
-  "lastModifiedDate" : "2024-12-22T06:35:01Z",
+  "lastModifiedDate" : "2024-12-22T06:41:34Z",
   "model" : {
     "deploymentNodes" : [ {
       "children" : [ {
@@ -63,7 +63,7 @@
               "instances" : "1",
               "name" : "Amazon SNS",
               "properties" : {
-                "structurizr.dsl.identifier" : "f24e51f0-de0e-406a-80a5-8430b8d219d9"
+                "structurizr.dsl.identifier" : "2ec0c371-15dc-4b57-bf5b-f22941cdde65"
               },
               "tags" : "Element,Deployment Node,Amazon Web Services - Simple Notification Service SNS"
             }, {
@@ -83,7 +83,7 @@
               "instances" : "1",
               "name" : "Amazon SQS",
               "properties" : {
-                "structurizr.dsl.identifier" : "2de906a4-3420-4f17-8659-cd9868c2860a"
+                "structurizr.dsl.identifier" : "8d84326c-8442-4fc7-843d-1211dd088a26"
               },
               "tags" : "Element,Deployment Node,Amazon Web Services - Simple Queue Service SQS"
             }, {
@@ -110,7 +110,7 @@
               "instances" : "1",
               "name" : "Amazon IAM",
               "properties" : {
-                "structurizr.dsl.identifier" : "da5ea502-61c4-4fd9-8425-aeef4933b6fc"
+                "structurizr.dsl.identifier" : "f51125dc-2c65-4220-9c1e-9b513880f2d8"
               },
               "tags" : "Element,Deployment Node,Amazon Web Services - Identity and Access Management IAM"
             } ],
@@ -120,7 +120,7 @@
             "instances" : "1",
             "name" : "Managed",
             "properties" : {
-              "structurizr.dsl.identifier" : "6a208383-cf3f-4be7-8af0-3bd57b51f443"
+              "structurizr.dsl.identifier" : "655069b5-1c64-43f8-8a80-bb658003a752"
             },
             "tags" : "Element,Deployment Node,Terraform Managed Resources",
             "technology" : "repo-infra-sns-com-sqs"
@@ -142,7 +142,7 @@
               "instances" : "1",
               "name" : "Amazon SSM",
               "properties" : {
-                "structurizr.dsl.identifier" : "532a7352-ebab-4e41-9bcd-a1ba28438a08"
+                "structurizr.dsl.identifier" : "ba47474a-5268-4f06-9ca8-4dc474b95780"
               },
               "tags" : "Element,Deployment Node,Amazon Web Services - Systems Manager"
             } ],
@@ -151,7 +151,7 @@
             "instances" : "1",
             "name" : "Data",
             "properties" : {
-              "structurizr.dsl.identifier" : "02d3eea1-3c8b-4006-b1b4-eaae253c4012"
+              "structurizr.dsl.identifier" : "e08a50c1-f746-420c-ad9d-46ed7fc8d083"
             },
             "tags" : "Element,Deployment Node,Terraform Data Resources"
           } ],
@@ -160,7 +160,7 @@
           "instances" : "1",
           "name" : "us-east-1",
           "properties" : {
-            "structurizr.dsl.identifier" : "ce38033a-8c5c-49df-84cb-db161384f50f"
+            "structurizr.dsl.identifier" : "4492c21b-f2cf-470d-96ac-3fe4a008ff25"
           },
           "tags" : "Element,Deployment Node,Amazon Web Services - Region"
         } ],
@@ -169,7 +169,7 @@
         "instances" : "1",
         "name" : "Enterprise",
         "properties" : {
-          "structurizr.dsl.identifier" : "fb657908-5953-4ff8-96e0-d4e6221f1869"
+          "structurizr.dsl.identifier" : "9489d2e9-364b-4724-9e52-4f10e2aa02ee"
         },
         "tags" : "Element,Deployment Node,Amazon Web Services - Server contents"
       } ],
@@ -178,7 +178,7 @@
       "instances" : "1",
       "name" : "Amazon Web Services",
       "properties" : {
-        "structurizr.dsl.identifier" : "fe3ae80c-6f51-499b-9041-bc8d5bf7e46b"
+        "structurizr.dsl.identifier" : "ea6ef29a-474f-4843-8c48-88783a5322a0"
       },
       "tags" : "Element,Deployment Node,Amazon Web Services - Cloud"
     } ]
@@ -255,11 +255,11 @@
       }, {
         "id" : "6",
         "x" : 299,
-        "y" : 1121
+        "y" : 1120
       }, {
         "id" : "7",
         "x" : 1049,
-        "y" : 1121
+        "y" : 1120
       }, {
         "id" : "9",
         "x" : 175,
@@ -267,7 +267,7 @@
       }, {
         "id" : "10",
         "x" : 2595,
-        "y" : 1225
+        "y" : 1224
       }, {
         "id" : "12",
         "x" : 175,
@@ -275,7 +275,7 @@
       }, {
         "id" : "13",
         "x" : 1845,
-        "y" : 1325
+        "y" : 1324
       }, {
         "id" : "16",
         "x" : 175,
@@ -287,7 +287,7 @@
       }, {
         "id" : "18",
         "x" : 1049,
-        "y" : 300
+        "y" : 299
       } ],
       "environment" : "Live",
       "key" : "deploy",
@@ -296,10 +296,10 @@
         "id" : "11",
         "vertices" : [ {
           "x" : 1741,
-          "y" : 1146
+          "y" : 1145
         }, {
           "x" : 2399,
-          "y" : 1146
+          "y" : 1145
         } ]
       }, {
         "id" : "14"
