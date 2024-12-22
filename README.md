@@ -1,6 +1,4 @@
-# terraform-show-etl
-
-## Processo de ETL para o Terraform
+# Processo de ETL para o Terraform
 
 Esta documentação descreve o processo de extração, transformação e organização dos dados gerados pelo Terraform, com o objetivo de criar um JSON estruturado para gerar diagramas de deployment de infraestrutura com Structurizr.
 
