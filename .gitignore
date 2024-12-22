@@ -158,6 +158,8 @@ crash.log
 .env
 
 
+./docs/.structurizr/
+.structurizr/
 localstack_data/
 
 # Spyder project settings
