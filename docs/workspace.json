@@ -1,0 +1,315 @@
+{
+  "configuration" : { },
+  "description" : "Description",
+  "documentation" : { },
+  "id" : 1,
+  "lastModifiedAgent" : "structurizr-ui",
+  "lastModifiedDate" : "2024-12-22T06:35:01Z",
+  "model" : {
+    "deploymentNodes" : [ {
+      "children" : [ {
+        "children" : [ {
+          "children" : [ {
+            "children" : [ {
+              "environment" : "Live",
+              "id" : "5",
+              "infrastructureNodes" : [ {
+                "description" : "Tópico SNS usado para distribuir mensagens.",
+                "environment" : "Live",
+                "id" : "6",
+                "name" : "SNS Topic",
+                "properties" : {
+                  "structurizr.dsl.identifier" : "snstopic"
+                },
+                "relationships" : [ {
+                  "description" : "Distributes messages",
+                  "destinationId" : "7",
+                  "id" : "8",
+                  "sourceId" : "6",
+                  "tags" : "Relationship"
+                }, {
+                  "description" : "Reference SSM Parameter",
+                  "destinationId" : "18",
+                  "id" : "19",
+                  "sourceId" : "6",
+                  "tags" : "Relationship"
+                } ],
+                "tags" : "Element,Infrastructure Node,Amazon Web Services - Simple Notification Service SNS Topic",
+                "technology" : "SNS Topic"
+              }, {
+                "description" : "Assinatura SNS para enviar mensagens para a fila.",
+                "environment" : "Live",
+                "id" : "7",
+                "name" : "SNS Subscription",
+                "properties" : {
+                  "structurizr.dsl.identifier" : "snssubscription"
+                },
+                "relationships" : [ {
+                  "description" : "Deliver messages to SQS",
+                  "destinationId" : "10",
+                  "id" : "11",
+                  "sourceId" : "7",
+                  "tags" : "Relationship"
+                }, {
+                  "description" : "Depends On",
+                  "destinationId" : "13",
+                  "id" : "15",
+                  "sourceId" : "7",
+                  "tags" : "Relationship"
+                } ],
+                "tags" : "Element,Infrastructure Node,Amazon Web Services - Simple Notification Service SNS HTTP Notification",
+                "technology" : "SNS Subscription"
+              } ],
+              "instances" : "1",
+              "name" : "Amazon SNS",
+              "properties" : {
+                "structurizr.dsl.identifier" : "f24e51f0-de0e-406a-80a5-8430b8d219d9"
+              },
+              "tags" : "Element,Deployment Node,Amazon Web Services - Simple Notification Service SNS"
+            }, {
+              "environment" : "Live",
+              "id" : "9",
+              "infrastructureNodes" : [ {
+                "description" : "Fila que recebe mensagens do tópico SNS.",
+                "environment" : "Live",
+                "id" : "10",
+                "name" : "SQS Queue",
+                "properties" : {
+                  "structurizr.dsl.identifier" : "sqsqueue"
+                },
+                "tags" : "Element,Infrastructure Node,Amazon Web Services - Simple Queue Service SQS Queue",
+                "technology" : "AWS SQS"
+              } ],
+              "instances" : "1",
+              "name" : "Amazon SQS",
+              "properties" : {
+                "structurizr.dsl.identifier" : "2de906a4-3420-4f17-8659-cd9868c2860a"
+              },
+              "tags" : "Element,Deployment Node,Amazon Web Services - Simple Queue Service SQS"
+            }, {
+              "environment" : "Live",
+              "id" : "12",
+              "infrastructureNodes" : [ {
+                "description" : "Política associada à fila SQS.",
+                "environment" : "Live",
+                "id" : "13",
+                "name" : "SQS Queue Policy",
+                "properties" : {
+                  "structurizr.dsl.identifier" : "sqsqueuepolicy"
+                },
+                "relationships" : [ {
+                  "description" : "Apply Policy to Queue",
+                  "destinationId" : "10",
+                  "id" : "14",
+                  "sourceId" : "13",
+                  "tags" : "Relationship"
+                } ],
+                "tags" : "Element,Infrastructure Node,Amazon Web Services - Identity and Access Management IAM Permissions",
+                "technology" : "AWS SQS Policy"
+              } ],
+              "instances" : "1",
+              "name" : "Amazon IAM",
+              "properties" : {
+                "structurizr.dsl.identifier" : "da5ea502-61c4-4fd9-8425-aeef4933b6fc"
+              },
+              "tags" : "Element,Deployment Node,Amazon Web Services - Identity and Access Management IAM"
+            } ],
+            "description" : "terraform",
+            "environment" : "Live",
+            "id" : "4",
+            "instances" : "1",
+            "name" : "Managed",
+            "properties" : {
+              "structurizr.dsl.identifier" : "6a208383-cf3f-4be7-8af0-3bd57b51f443"
+            },
+            "tags" : "Element,Deployment Node,Terraform Managed Resources",
+            "technology" : "repo-infra-sns-com-sqs"
+          }, {
+            "children" : [ {
+              "environment" : "Live",
+              "id" : "17",
+              "infrastructureNodes" : [ {
+                "description" : "Parâmetro usado para configuração.",
+                "environment" : "Live",
+                "id" : "18",
+                "name" : "SSM Parameter Store",
+                "properties" : {
+                  "structurizr.dsl.identifier" : "parameter"
+                },
+                "tags" : "Element,Infrastructure Node,Amazon Web Services - Systems Manager Parameter Store",
+                "technology" : "AWS SSM Parameter"
+              } ],
+              "instances" : "1",
+              "name" : "Amazon SSM",
+              "properties" : {
+                "structurizr.dsl.identifier" : "532a7352-ebab-4e41-9bcd-a1ba28438a08"
+              },
+              "tags" : "Element,Deployment Node,Amazon Web Services - Systems Manager"
+            } ],
+            "environment" : "Live",
+            "id" : "16",
+            "instances" : "1",
+            "name" : "Data",
+            "properties" : {
+              "structurizr.dsl.identifier" : "02d3eea1-3c8b-4006-b1b4-eaae253c4012"
+            },
+            "tags" : "Element,Deployment Node,Terraform Data Resources"
+          } ],
+          "environment" : "Live",
+          "id" : "3",
+          "instances" : "1",
+          "name" : "us-east-1",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ce38033a-8c5c-49df-84cb-db161384f50f"
+          },
+          "tags" : "Element,Deployment Node,Amazon Web Services - Region"
+        } ],
+        "environment" : "Live",
+        "id" : "2",
+        "instances" : "1",
+        "name" : "Enterprise",
+        "properties" : {
+          "structurizr.dsl.identifier" : "fb657908-5953-4ff8-96e0-d4e6221f1869"
+        },
+        "tags" : "Element,Deployment Node,Amazon Web Services - Server contents"
+      } ],
+      "environment" : "Live",
+      "id" : "1",
+      "instances" : "1",
+      "name" : "Amazon Web Services",
+      "properties" : {
+        "structurizr.dsl.identifier" : "fe3ae80c-6f51-499b-9041-bc8d5bf7e46b"
+      },
+      "tags" : "Element,Deployment Node,Amazon Web Services - Cloud"
+    } ]
+  },
+  "name" : "Name",
+  "properties" : {
+    "structurizr.dsl" : "d29ya3NwYWNlIHsKICAgIG1vZGVsIHsKICAgICAgICBsaXZlID0gZGVwbG95bWVudEVudmlyb25tZW50ICJMaXZlIiB7CiAgICAgICAgICAgIGRlcGxveW1lbnROb2RlICJBbWF6b24gV2ViIFNlcnZpY2VzIiB7CiAgICAgICAgICAgICAgICB0YWdzICJBbWF6b24gV2ViIFNlcnZpY2VzIC0gQ2xvdWQiCgogICAgICAgICAgICAgICAgZGVwbG95bWVudE5vZGUgIkVudGVycHJpc2UiIHsKICAgICAgICAgICAgICAgICAgICB0YWdzICJBbWF6b24gV2ViIFNlcnZpY2VzIC0gU2VydmVyIGNvbnRlbnRzIgoKICAgICAgICAgICAgICAgICAgICBkZXBsb3ltZW50Tm9kZSAidXMtZWFzdC0xIiB7CiAgICAgICAgICAgICAgICAgICAgICAgIHRhZ3MgIkFtYXpvbiBXZWIgU2VydmljZXMgLSBSZWdpb24iCgogICAgICAgICAgICAgICAgICAgICAgICAjIEdydXBvIE1hbmFnZWQKICAgICAgICAgICAgICAgICAgICAgICAgZGVwbG95bWVudE5vZGUgIk1hbmFnZWQiICJ0ZXJyYWZvcm0iICJyZXBvLWluZnJhLXNucy1jb20tc3FzIiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICB0YWdzICJUZXJyYWZvcm0gTWFuYWdlZCBSZXNvdXJjZXMiIAoKICAgICAgICAgICAgICAgICAgICAgICAgICAgIGRlcGxveW1lbnROb2RlICJBbWF6b24gU05TIiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdGFncyAiQW1hem9uIFdlYiBTZXJ2aWNlcyAtIFNpbXBsZSBOb3RpZmljYXRpb24gU2VydmljZSBTTlMiCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgc25zVG9waWMgPSBpbmZyYXN0cnVjdHVyZU5vZGUgIlNOUyBUb3BpYyIgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiVMOzcGljbyBTTlMgdXNhZG8gcGFyYSBkaXN0cmlidWlyIG1lbnNhZ2Vucy4iCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHRlY2hub2xvZ3kgIlNOUyBUb3BpYyIKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdGFncyAiQW1hem9uIFdlYiBTZXJ2aWNlcyAtIFNpbXBsZSBOb3RpZmljYXRpb24gU2VydmljZSBTTlMgVG9waWMiCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHNuc1N1YnNjcmlwdGlvbiA9IGluZnJhc3RydWN0dXJlTm9kZSAiU05TIFN1YnNjcmlwdGlvbiIgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiQXNzaW5hdHVyYSBTTlMgcGFyYSBlbnZpYXIgbWVuc2FnZW5zIHBhcmEgYSBmaWxhLiIKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdGVjaG5vbG9neSAiU05TIFN1YnNjcmlwdGlvbiIKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdGFncyAiQW1hem9uIFdlYiBTZXJ2aWNlcyAtIFNpbXBsZSBOb3RpZmljYXRpb24gU2VydmljZSBTTlMgSFRUUCBOb3RpZmljYXRpb24iCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHNuc1RvcGljIC0+IHNuc1N1YnNjcmlwdGlvbiAiRGlzdHJpYnV0ZXMgbWVzc2FnZXMiCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgICAgICAgICAgICAgIGRlcGxveW1lbnROb2RlICJBbWF6b24gU1FTIiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdGFncyAiQW1hem9uIFdlYiBTZXJ2aWNlcyAtIFNpbXBsZSBRdWV1ZSBTZXJ2aWNlIFNRUyIKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBzcXNRdWV1ZSA9IGluZnJhc3RydWN0dXJlTm9kZSAiU1FTIFF1ZXVlIiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJGaWxhIHF1ZSByZWNlYmUgbWVuc2FnZW5zIGRvIHTDs3BpY28gU05TLiIKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdGVjaG5vbG9neSAiQVdTIFNRUyIKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdGFncyAiQW1hem9uIFdlYiBTZXJ2aWNlcyAtIFNpbXBsZSBRdWV1ZSBTZXJ2aWNlIFNRUyBRdWV1ZSIKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHNuc1N1YnNjcmlwdGlvbiAtPiBzcXNRdWV1ZSAiRGVsaXZlciBtZXNzYWdlcyB0byBTUVMiCiAgICAgICAgICAgICAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgICAgICAgICAgICAgZGVwbG95bWVudE5vZGUgIkFtYXpvbiBJQU0iIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB0YWdzICJBbWF6b24gV2ViIFNlcnZpY2VzIC0gSWRlbnRpdHkgYW5kIEFjY2VzcyBNYW5hZ2VtZW50IElBTSIKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBzcXNRdWV1ZVBvbGljeSA9IGluZnJhc3RydWN0dXJlTm9kZSAiU1FTIFF1ZXVlIFBvbGljeSIgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiUG9sw610aWNhIGFzc29jaWFkYSDDoCBmaWxhIFNRUy4iCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHRlY2hub2xvZ3kgIkFXUyBTUVMgUG9saWN5IgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB0YWdzICJBbWF6b24gV2ViIFNlcnZpY2VzIC0gSWRlbnRpdHkgYW5kIEFjY2VzcyBNYW5hZ2VtZW50IElBTSBQZXJtaXNzaW9ucyIKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHNxc1F1ZXVlUG9saWN5IC0+IHNxc1F1ZXVlICJBcHBseSBQb2xpY3kgdG8gUXVldWUiCiAgICAgICAgICAgICAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgICAgICAgICAgICAgc25zU3Vic2NyaXB0aW9uIC0+IHNxc1F1ZXVlUG9saWN5ICJEZXBlbmRzIE9uIgogICAgICAgICAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgICAgICAgICAjIEdydXBvIERhdGEKICAgICAgICAgICAgICAgICAgICAgICAgZGVwbG95bWVudE5vZGUgIkRhdGEiIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgIHRhZ3MgIlRlcnJhZm9ybSBEYXRhIFJlc291cmNlcyIKCiAgICAgICAgICAgICAgICAgICAgICAgICAgICBkZXBsb3ltZW50Tm9kZSAiQW1hem9uIFNTTSIgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHRhZ3MgIkFtYXpvbiBXZWIgU2VydmljZXMgLSBTeXN0ZW1zIE1hbmFnZXIiCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgcGFyYW1ldGVyID0gaW5mcmFzdHJ1Y3R1cmVOb2RlICJTU00gUGFyYW1ldGVyIFN0b3JlIiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJQYXLDom1ldHJvIHVzYWRvIHBhcmEgY29uZmlndXJhw6fDo28uIgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB0ZWNobm9sb2d5ICJBV1MgU1NNIFBhcmFtZXRlciIKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdGFncyAiQW1hem9uIFdlYiBTZXJ2aWNlcyAtIFN5c3RlbXMgTWFuYWdlciBQYXJhbWV0ZXIgU3RvcmUiCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgICAgICAgICAgICAgIHNuc1RvcGljIC0+IHBhcmFtZXRlciAiUmVmZXJlbmNlIFNTTSBQYXJhbWV0ZXIiCiAgICAgICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0KICAgICAgICB9CiAgICB9CiAgICB2aWV3cyB7CiAgICAgICAgc3R5bGVzIHsKICAgICAgICAgICAgcmVsYXRpb25zaGlwICJEZXBlbmRzIE9uIiB7CiAgICAgICAgICAgICAgICBjb2xvciAjMDAwMEZGCiAgICAgICAgICAgICAgICB0aGlja25lc3MgMgogICAgICAgICAgICAgICAgc3R5bGUgc29saWQKICAgICAgICAgICAgICAgIGZvbnRTaXplIDI0CiAgICAgICAgICAgICAgICBwb3NpdGlvbiA5MAogICAgICAgICAgICAgICAgcm91dGluZyBkaXJlY3QKICAgICAgICAgICAgfQogICAgICAgICAgICAKICAgICAgICAgICAgZWxlbWVudCAiRWxlbWVudCIgewogICAgICAgICAgICAgICAgYmFja2dyb3VuZCAjZmZmZmZmCiAgICAgICAgICAgIH0KICAgICAgICAgICAgCiAgICAgICAgICAgIGVsZW1lbnQgIlRlcnJhZm9ybSBNYW5hZ2VkIFJlc291cmNlcyIgewogICAgICAgICAgICAgICAgY29sb3IgIzM5MWZkOQogICAgICAgICAgICAgICAgc3Ryb2tlICMzOTFmZDkKICAgICAgICAgICAgfQogICAgICAgICAgICAKICAgICAgICAgICAgZWxlbWVudCAiVGVycmFmb3JtIERhdGEgUmVzb3VyY2VzIiB7CiAgICAgICAgICAgICAgICBjb2xvciAjNmQ2YzZiCiAgICAgICAgICAgICAgICBzdHJva2UgIzZkNmM2YgogICAgICAgICAgICB9CiAgICAgICAgfQoKICAgICAgICBkZXBsb3ltZW50ICogbGl2ZSAiZGVwbG95IiB7CiAgICAgICAgICAgIGluY2x1ZGUgKgogICAgICAgICAgICBhdXRvTGF5b3V0IGxyCiAgICAgICAgfQoKICAgICAgICB0aGVtZSBodHRwczovL3N0YXRpYy5zdHJ1Y3R1cml6ci5jb20vdGhlbWVzL2FtYXpvbi13ZWItc2VydmljZXMtMjAyMC4wNC4zMC90aGVtZS5qc29uCiAgICB9Cn0="
+  },
+  "views" : {
+    "configuration" : {
+      "branding" : { },
+      "lastSavedView" : "deploy",
+      "metadataSymbols" : "SquareBrackets",
+      "styles" : {
+        "elements" : [ {
+          "background" : "#ffffff",
+          "tag" : "Element"
+        }, {
+          "color" : "#391fd9",
+          "stroke" : "#391fd9",
+          "tag" : "Terraform Managed Resources"
+        }, {
+          "color" : "#6d6c6b",
+          "stroke" : "#6d6c6b",
+          "tag" : "Terraform Data Resources"
+        } ],
+        "relationships" : [ {
+          "color" : "#0000ff",
+          "fontSize" : 24,
+          "position" : 90,
+          "routing" : "Direct",
+          "style" : "Solid",
+          "tag" : "Depends On",
+          "thickness" : 2
+        } ]
+      },
+      "terminology" : { },
+      "themes" : [ "https://static.structurizr.com/themes/amazon-web-services-2020.04.30/theme.json" ]
+    },
+    "deploymentViews" : [ {
+      "automaticLayout" : {
+        "applied" : true,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "dimensions" : {
+        "height" : 2280,
+        "width" : 3346
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 175,
+        "y" : 175
+      }, {
+        "id" : "2",
+        "x" : 175,
+        "y" : 175
+      }, {
+        "id" : "3",
+        "x" : 175,
+        "y" : 175
+      }, {
+        "id" : "4",
+        "x" : 175,
+        "y" : 175
+      }, {
+        "id" : "5",
+        "x" : 175,
+        "y" : 175
+      }, {
+        "id" : "6",
+        "x" : 299,
+        "y" : 1121
+      }, {
+        "id" : "7",
+        "x" : 1049,
+        "y" : 1121
+      }, {
+        "id" : "9",
+        "x" : 175,
+        "y" : 175
+      }, {
+        "id" : "10",
+        "x" : 2595,
+        "y" : 1225
+      }, {
+        "id" : "12",
+        "x" : 175,
+        "y" : 175
+      }, {
+        "id" : "13",
+        "x" : 1845,
+        "y" : 1325
+      }, {
+        "id" : "16",
+        "x" : 175,
+        "y" : 175
+      }, {
+        "id" : "17",
+        "x" : 175,
+        "y" : 175
+      }, {
+        "id" : "18",
+        "x" : 1049,
+        "y" : 300
+      } ],
+      "environment" : "Live",
+      "key" : "deploy",
+      "order" : 1,
+      "relationships" : [ {
+        "id" : "11",
+        "vertices" : [ {
+          "x" : 1741,
+          "y" : 1146
+        }, {
+          "x" : 2399,
+          "y" : 1146
+        } ]
+      }, {
+        "id" : "14"
+      }, {
+        "id" : "15"
+      }, {
+        "id" : "19"
+      }, {
+        "id" : "8"
+      } ]
+    } ]
+  }
+}

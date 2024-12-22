@@ -14,3 +14,11 @@ services:
     volumes:
       - "./localstack_data:/var/lib/localstack" 
       - "/var/run/docker.sock:/var/run/docker.sock" 
+
+  structurizr-lite:
+    image: structurizr/lite
+    container_name: structurizr-lite
+    ports:
+      - "8080:8080" # Porta padrão do Structurizr Lite
+    volumes:
+      - "./docs:/usr/local/structurizr" # Montando a pasta `docs` como volume
