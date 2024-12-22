@@ -1,116 +1,170 @@
-1.	Executar o comando terraform show -json: Capturar a saída do estado da infraestrutura gerenciada pelo Terraform em formato JSON.
-2.	Processar os dados: Criar um script que extrai apenas as informações úteis para criar diagramas de deployment no estilo C4 Model (e.g., recursos, dependências, relações, tipos).
-3.	Gerar um JSON estruturado: Salvar as informações extraídas em um formato limpo e organizado para ser consumido posteriormente por sistemas ou agentes que gerem diagramas.
-
----
+# terraform-show-etl
 
 ## Processo de ETL para o Terraform
 
-Esta documentação descreve o processo de extração, transformação e carregamento (ETL) dos dados gerados pelo Terraform para estruturar informações de infraestrutura em um formato hierárquico e organizado. O objetivo é transformar os dados brutos em JSON para criar diagramas de deployment no estilo C4 Model.
+Esta documentação descreve o processo de extração, transformação e organização dos dados gerados pelo Terraform, com o objetivo de criar um JSON estruturado para gerar diagramas de deployment de infraestrutura (C4 Deployment).
 
-### 1. Comandos para Gerar o JSON do Terraform State
+## Visão Geral
 
-Para capturar o estado da infraestrutura gerenciada pelo Terraform em formato JSON, execute os seguintes comandos:
+Este script processa os dados gerados pelo comando `terraform show -json`, extraindo informações sobre recursos, metadados e relacionamentos definidos no Terraform. O resultado é um JSON consolidado que organiza recursos por tipo e extrai relacionamentos explícitos e referências implícitas.
+
+## Comandos para Gerar o JSON
+
+Antes de executar o script Python, você precisa gerar o JSON de entrada a partir do Terraform:
+
+1.	Inicialize o Terraform:
 
 ```bash
-cd terraform
 terraform init
+```
+
+2.	Planeje as mudanças:
+
+```bash
 terraform plan -out=tfplan
+```
+
+3.	Gere o JSON:
+
+```bash
 terraform show -json tfplan > terraform_state.json
 ```
 
-**Descrição dos Comandos:**
+O arquivo `terraform_state.json` é a entrada principal para o script Python.
 
-- `terraform init`: Inicializa o ambiente do Terraform, baixando os provedores necessários.
-- `terraform plan -out=tfplan`: Gera um plano (tfplan) para aplicar as mudanças descritas no código Terraform.
-- `terraform show -json tfplan > terraform_state.json`: Converte o plano gerado (tfplan) em um arquivo JSON detalhado, chamado `terraform_state.json`.
+## Estrutura do Script
 
-O arquivo `terraform_state.json` é a entrada principal para o processo de ETL. Ele contém todas as informações sobre os recursos configurados e planejados pelo Terraform.
+O script é dividido em etapas principais:
 
-### 2. Estrutura do JSON Gerado
+**1. Remoção de Valores Vazios**
 
-O arquivo JSON gerado possui as seguintes seções principais:
+A função `remove_empty_values` elimina valores nulos, listas vazias e objetos vazios do JSON para simplificar os dados:
 
-	1.	configuration:
-	•	Representa a configuração declarada no código Terraform.
-	•	Inclui:
-		•	root_module.resources: Reflete os recursos declarados no código, incluindo expressões, referências e metadados detalhados.
-	2.	planned_values:
-	•	Representa o estado final planejado dos recursos.
-	•	Contém informações resolvidas, como IDs, ARNs, e outros metadados calculados.
-	3.	resource_changes:
-	•	Lista as mudanças que o Terraform irá realizar.
-	•	Exibe o estado antes (before) e depois (after) das alterações.
-	•	Contém apenas os recursos que sofrerão mudanças, e não o estado completo.
-	4.	output_changes:
-	•	Detalha as mudanças nos outputs definidos no código Terraform.
+```python
+def remove_empty_values(obj):
+    # Remove valores nulos, listas e objetos vazios
+```
 
-3. Estruturação do JSON Extraído
+**2. Extração de Metadados**
 
-Após o processamento, o JSON é transformado em um formato hierárquico, organizado em:
-	•	Provedor: Agrupa todos os recursos de um único provedor (exemplo: aws).
-	•	Região: Agrupa os recursos por região configurada (exemplo: us-east-1).
-	•	Hierarquia de Recursos:
-	•	Recursos são organizados conforme dependências ou associações.
-	•	Exemplo de estrutura:
+A função `extract_metadata` extrai informações sobre o provedor (e.g., AWS) e a região:
 
-{
-  "aws": {
-    "us-east-1": {
-      "vpcs": [
-        {
-          "vpc_id": "aws_vpc.main",
-          "subnets": [
-            {
-              "subnet_id": "aws_subnet.example",
-              "security_groups": [
-                {
-                  "group_id": "aws_security_group.example",
-                  "instances": [...]
-                }
-              ]
-            }
-          ]
-        }
-      ],
-      "s3_buckets": [...],
-      "sns_topics": [...],
-      "other_resources": [...]
-    }
-  }
-}
+```python
+def extract_metadata(terraform_json):
+    # Extrai o provedor e a região do JSON
+```
 
-4. Relacionamentos
+**3. Organização de Recursos por Tipo**
 
-Os relacionamentos extraídos são organizados separadamente, com base nas dependências e associações entre os recursos. Cada relacionamento segue o seguinte formato:
+A função `organize_resources_by_type` agrupa os recursos extraídos por tipo (e.g., `aws_instance`, `aws_security_group`):
+
+```python
+def organize_resources_by_type(resources):
+    # Agrupa os recursos por tipo
+```
+
+**4. Extração de Relacionamentos**
+
+A função `extract_relationships` analisa explicitamente os campos `depends_on` e referências em expressions para identificar dependências explícitas:
+
+```python
+def extract_relationships(resources):
+    # Extrai relacionamentos explícitos entre os recursos
+```
+
+**Tipos de Relacionamentos:**
+
+- `depends_on`: Dependências explícitas declaradas no código Terraform.
+- `reference`: Referências diretas a outros recursos encontradas em expressions.
+
+**5. Limpeza de Dados**
+
+As funções `remove_references_from_resources` e `clean_empty_properties` eliminam campos desnecessários e propriedades vazias para deixar o JSON final mais legível e útil:
+
+```python
+def remove_references_from_resources(resources):
+    # Remove referências após extraí-las
+```
+
+```python
+def clean_empty_properties(resources):
+    # Remove propriedades vazias do JSON final
+```
+
+## Fluxo do Script
+
+O fluxo principal do script está encapsulado na função `extract_configuration_resources`:
+
+```python
+def extract_configuration_resources(terraform_json):
+    # Extrai e organiza os recursos, relacionamentos e limpa os dados
+```
+
+**Etapas:**
+
+1. Carregar os dados do Terraform (`terraform_state.json)`.
+2. Organizar os recursos por tipo.
+3. Extrair relacionamentos explícitos.
+4. Limpar valores desnecessários e referências extraídas.
+
+## Saída Final
+
+O script gera um arquivo chamado `c4_deployment_data.json` contendo:
+
+1.	Metadados:
+	- Provedor (`provider`) e região (`region`).
+
+2.	Recursos:
+	- Estruturados por tipo (e.g., `aws_instance`, `aws_security_group`).
+
+3.	Relacionamentos:
+	- Relacionamentos explícitos entre os recursos.
+
+**Formato Exemplo:**
 
 ```json
 {
-  "from": "aws_sns_topic_subscription.example_subscription",
-  "to": "aws_sqs_queue.example_queue",
-  "type": "reference"
+  "metadata": {
+    "provider": "aws",
+    "region": "us-east-1"
+  },
+  "resources": {
+    "aws_instance": [
+      {
+        "address": "aws_instance.example_instance",
+        "type": "aws_instance",
+        "expressions": {
+          "ami": {
+            "constant_value": "ami-12345678"
+          },
+          "instance_type": {
+            "constant_value": "t2.micro"
+          }
+        }
+      }
+    ],
+    "aws_security_group": [
+      {
+        "address": "aws_security_group.example_sg",
+        "type": "aws_security_group",
+        "expressions": {
+          "name": {
+            "constant_value": "example-security-group"
+          }
+        }
+      }
+    ]
+  },
+  "relationships": [
+    {
+      "from": "aws_instance.example_instance",
+      "to": "aws_security_group.example_sg",
+      "type": "reference"
+    }
+  ]
 }
 ```
 
-•	Campos Importantes:
-	•	from: Identificador do recurso de origem.
-	•	to: Identificador do recurso de destino.
-	•	type: Define o tipo do relacionamento (reference ou depends_on).
+## Conclusão
 
-5. Processamento e Limpeza
-
-Durante o processo ETL, as seguintes etapas são realizadas:
-	1.	Remoção de Campos Desnecessários:
-	•	Campos como type (já agrupados por tipo) e provider_config_key são removidos.
-	2.	Eliminação de Propriedades Vazias:
-	•	Objetos e listas vazias são excluídos após o processamento.
-	3.	Organização Hierárquica:
-	•	Recursos são estruturados hierarquicamente, com base em VPCs, regiões, e outros agrupamentos naturais.
-
-6. Uso do JSON Final
-
-O JSON final é preparado para:
-	•	Ser consumido por sistemas ou agentes de IA que geram diagramas no formato C4 Model.
-	•	Facilitar visualizações hierárquicas e análises de infraestrutura.
-
-Se precisar de ajustes ou novas funcionalidades, esta estrutura pode ser facilmente expandida para incluir outros provedores ou comportamentos específicos.
+O script transforma os dados brutos do Terraform em um JSON estruturado para facilitar a criação de diagramas de deployment ou outras análises de infraestrutura.
