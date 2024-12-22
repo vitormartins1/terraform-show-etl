@@ -103,7 +103,7 @@ workspace {
 
         deployment * live "deploy" {
             include *
-            autoLayout tb
+            autoLayout lr
         }
 
         theme https://static.structurizr.com/themes/amazon-web-services-2020.04.30/theme.json
