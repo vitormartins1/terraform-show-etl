@@ -3,8 +3,7 @@
   "description" : "Description",
   "documentation" : { },
   "id" : 1,
-  "lastModifiedAgent" : "structurizr-ui",
-  "lastModifiedDate" : "2024-12-22T06:51:08Z",
+  "lastModifiedDate" : "2024-12-22T06:54:11Z",
   "model" : {
     "deploymentNodes" : [ {
       "children" : [ {
@@ -63,7 +62,7 @@
               "instances" : "1",
               "name" : "Amazon SNS",
               "properties" : {
-                "structurizr.dsl.identifier" : "f7bc4c51-aeae-478c-8714-bf35e91a80e0"
+                "structurizr.dsl.identifier" : "60c3b9fc-f807-4578-a0df-6284af9424d8"
               },
               "tags" : "Element,Deployment Node,Amazon Web Services - Simple Notification Service SNS"
             }, {
@@ -83,7 +82,7 @@
               "instances" : "1",
               "name" : "Amazon SQS",
               "properties" : {
-                "structurizr.dsl.identifier" : "b37c70a8-3017-404c-bc0b-86265e8f653b"
+                "structurizr.dsl.identifier" : "a2a0f102-20f1-4f36-8197-229ec4366ed6"
               },
               "tags" : "Element,Deployment Node,Amazon Web Services - Simple Queue Service SQS"
             }, {
@@ -110,7 +109,7 @@
               "instances" : "1",
               "name" : "Amazon IAM",
               "properties" : {
-                "structurizr.dsl.identifier" : "1c12ba97-5f19-4749-8c1b-ec0a0d932a30"
+                "structurizr.dsl.identifier" : "07db4a43-e5e2-4e91-b595-06bda6efe2cc"
               },
               "tags" : "Element,Deployment Node,Amazon Web Services - Identity and Access Management IAM"
             } ],
@@ -120,7 +119,7 @@
             "instances" : "1",
             "name" : "Managed",
             "properties" : {
-              "structurizr.dsl.identifier" : "516d2428-bb77-4721-ae81-686b4d8c9ffe"
+              "structurizr.dsl.identifier" : "ebfc4153-f5c0-4778-867f-d2bbc6f8aa20"
             },
             "tags" : "Element,Deployment Node,Terraform Managed Resources",
             "technology" : "repo-infra-sns-com-sqs"
@@ -142,7 +141,7 @@
               "instances" : "1",
               "name" : "Amazon SSM",
               "properties" : {
-                "structurizr.dsl.identifier" : "9bb7ff1f-1ae4-4e56-a5b0-f50a2d7eeeba"
+                "structurizr.dsl.identifier" : "60d82696-d4cb-4771-8aeb-96f5b7a1880c"
               },
               "tags" : "Element,Deployment Node,Amazon Web Services - Systems Manager"
             } ],
@@ -151,7 +150,7 @@
             "instances" : "1",
             "name" : "Data",
             "properties" : {
-              "structurizr.dsl.identifier" : "9f20e607-8977-48c8-98ad-f59009cbffeb"
+              "structurizr.dsl.identifier" : "f421901a-d7d9-4934-90dd-89b21eb6b631"
             },
             "tags" : "Element,Deployment Node,Terraform Data Resources"
           } ],
@@ -160,7 +159,7 @@
           "instances" : "1",
           "name" : "us-east-1",
           "properties" : {
-            "structurizr.dsl.identifier" : "33e4f94d-361c-4c1d-b290-ea4ab9ed7d77"
+            "structurizr.dsl.identifier" : "6503f914-f746-400b-81d3-ba133c24e437"
           },
           "tags" : "Element,Deployment Node,Amazon Web Services - Region"
         } ],
@@ -169,7 +168,7 @@
         "instances" : "1",
         "name" : "Enterprise",
         "properties" : {
-          "structurizr.dsl.identifier" : "bf5e3443-9c11-4594-bd73-cd4c6ec15bb4"
+          "structurizr.dsl.identifier" : "cda54cd3-bd3a-4edb-a000-4f36d2202c7f"
         },
         "tags" : "Element,Deployment Node,Amazon Web Services - Server contents"
       } ],
@@ -178,7 +177,7 @@
       "instances" : "1",
       "name" : "Amazon Web Services",
       "properties" : {
-        "structurizr.dsl.identifier" : "5f5a354d-d78a-4b67-8022-17bff796d179"
+        "structurizr.dsl.identifier" : "5f9caff5-6686-4e4a-8ec0-dfea230d95ed"
       },
       "tags" : "Element,Deployment Node,Amazon Web Services - Cloud"
     } ]
@@ -191,7 +190,6 @@
     "configuration" : {
       "branding" : { },
       "lastSavedView" : "deploy",
-      "metadataSymbols" : "SquareBrackets",
       "styles" : {
         "elements" : [ {
           "background" : "#ffffff",
@@ -220,7 +218,7 @@
     },
     "deploymentViews" : [ {
       "automaticLayout" : {
-        "applied" : true,
+        "applied" : false,
         "edgeSeparation" : 0,
         "implementation" : "Graphviz",
         "nodeSeparation" : 300,
@@ -228,89 +226,74 @@
         "rankSeparation" : 300,
         "vertices" : false
       },
-      "dimensions" : {
-        "height" : 3101,
-        "width" : 2225
-      },
       "elements" : [ {
         "id" : "1",
-        "x" : 175,
-        "y" : 175
+        "x" : 0,
+        "y" : 0
       }, {
         "id" : "2",
-        "x" : 175,
-        "y" : 175
+        "x" : 0,
+        "y" : 0
       }, {
         "id" : "3",
-        "x" : 175,
-        "y" : 175
+        "x" : 0,
+        "y" : 0
       }, {
         "id" : "4",
-        "x" : 175,
-        "y" : 175
+        "x" : 0,
+        "y" : 0
       }, {
         "id" : "5",
-        "x" : 175,
-        "y" : 175
+        "x" : 0,
+        "y" : 0
       }, {
         "id" : "6",
-        "x" : 505,
-        "y" : 299
+        "x" : 0,
+        "y" : 0
       }, {
         "id" : "7",
-        "x" : 505,
-        "y" : 899
+        "x" : 0,
+        "y" : 0
       }, {
         "id" : "9",
-        "x" : 175,
-        "y" : 175
+        "x" : 0,
+        "y" : 0
       }, {
         "id" : "10",
-        "x" : 400,
-        "y" : 2145
+        "x" : 0,
+        "y" : 0
       }, {
         "id" : "12",
-        "x" : 175,
-        "y" : 175
+        "x" : 0,
+        "y" : 0
       }, {
         "id" : "13",
-        "x" : 300,
-        "y" : 1545
+        "x" : 0,
+        "y" : 0
       }, {
         "id" : "16",
-        "x" : 175,
-        "y" : 175
+        "x" : 0,
+        "y" : 0
       }, {
         "id" : "17",
-        "x" : 175,
-        "y" : 175
+        "x" : 0,
+        "y" : 0
       }, {
         "id" : "18",
-        "x" : 1475,
-        "y" : 899
+        "x" : 0,
+        "y" : 0
       } ],
       "environment" : "Live",
       "key" : "deploy",
       "order" : 1,
       "relationships" : [ {
-        "id" : "11",
-        "vertices" : [ {
-          "x" : 930,
-          "y" : 1441
-        }, {
-          "x" : 930,
-          "y" : 1949
-        } ]
+        "id" : "11"
       }, {
         "id" : "14"
       }, {
         "id" : "15"
       }, {
-        "id" : "19",
-        "vertices" : [ {
-          "x" : 1134,
-          "y" : 691
-        } ]
+        "id" : "19"
       }, {
         "id" : "8"
       } ]
