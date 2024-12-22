@@ -3,7 +3,8 @@
   "description" : "Description",
   "documentation" : { },
   "id" : 1,
-  "lastModifiedDate" : "2024-12-22T06:54:11Z",
+  "lastModifiedAgent" : "structurizr-ui",
+  "lastModifiedDate" : "2024-12-22T06:54:17Z",
   "model" : {
     "deploymentNodes" : [ {
       "children" : [ {
@@ -190,6 +191,7 @@
     "configuration" : {
       "branding" : { },
       "lastSavedView" : "deploy",
+      "metadataSymbols" : "SquareBrackets",
       "styles" : {
         "elements" : [ {
           "background" : "#ffffff",
@@ -218,7 +220,7 @@
     },
     "deploymentViews" : [ {
       "automaticLayout" : {
-        "applied" : false,
+        "applied" : true,
         "edgeSeparation" : 0,
         "implementation" : "Graphviz",
         "nodeSeparation" : 300,
@@ -226,74 +228,89 @@
         "rankSeparation" : 300,
         "vertices" : false
       },
+      "dimensions" : {
+        "height" : 3101,
+        "width" : 2225
+      },
       "elements" : [ {
         "id" : "1",
-        "x" : 0,
-        "y" : 0
+        "x" : 175,
+        "y" : 175
       }, {
         "id" : "2",
-        "x" : 0,
-        "y" : 0
+        "x" : 175,
+        "y" : 175
       }, {
         "id" : "3",
-        "x" : 0,
-        "y" : 0
+        "x" : 175,
+        "y" : 175
       }, {
         "id" : "4",
-        "x" : 0,
-        "y" : 0
+        "x" : 175,
+        "y" : 175
       }, {
         "id" : "5",
-        "x" : 0,
-        "y" : 0
+        "x" : 175,
+        "y" : 175
       }, {
         "id" : "6",
-        "x" : 0,
-        "y" : 0
+        "x" : 505,
+        "y" : 299
       }, {
         "id" : "7",
-        "x" : 0,
-        "y" : 0
+        "x" : 505,
+        "y" : 899
       }, {
         "id" : "9",
-        "x" : 0,
-        "y" : 0
+        "x" : 175,
+        "y" : 175
       }, {
         "id" : "10",
-        "x" : 0,
-        "y" : 0
+        "x" : 400,
+        "y" : 2145
       }, {
         "id" : "12",
-        "x" : 0,
-        "y" : 0
+        "x" : 175,
+        "y" : 175
       }, {
         "id" : "13",
-        "x" : 0,
-        "y" : 0
+        "x" : 300,
+        "y" : 1545
       }, {
         "id" : "16",
-        "x" : 0,
-        "y" : 0
+        "x" : 175,
+        "y" : 175
       }, {
         "id" : "17",
-        "x" : 0,
-        "y" : 0
+        "x" : 175,
+        "y" : 175
       }, {
         "id" : "18",
-        "x" : 0,
-        "y" : 0
+        "x" : 1475,
+        "y" : 899
       } ],
       "environment" : "Live",
       "key" : "deploy",
       "order" : 1,
       "relationships" : [ {
-        "id" : "11"
+        "id" : "11",
+        "vertices" : [ {
+          "x" : 930,
+          "y" : 1441
+        }, {
+          "x" : 930,
+          "y" : 1949
+        } ]
       }, {
         "id" : "14"
       }, {
         "id" : "15"
       }, {
-        "id" : "19"
+        "id" : "19",
+        "vertices" : [ {
+          "x" : 1134,
+          "y" : 691
+        } ]
       }, {
         "id" : "8"
       } ]
